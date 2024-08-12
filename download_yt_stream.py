@@ -245,7 +245,7 @@ def delete_file(path):
 
                 prefix=None
                 if(filename.endswith('.csv')):
-                    prefix=filename.find('New')
+                    prefix=filename.find('Youtube_download')
 
                     if(prefix==0):
                         prefix_dict[prefix].append(filename)
