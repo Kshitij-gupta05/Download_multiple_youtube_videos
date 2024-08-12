@@ -6,7 +6,7 @@ st.title('Youtube Video downloader')
 
 folder_path='C:\\Users\\HP\\Desktop'
 folder='New1'
-file='New.csv'
+file='Youtube_download.csv'
 
 path=os.path.join(folder_path,folder)
 file_path=os.path.join(path,file)
@@ -17,7 +17,7 @@ result_lt=dy.check_file_exist(path,file_path)
 if(len(result_lt[0])>1):
     st.warning(result_lt[0])
 
-st.write(result_lt[1])
+# st.write(result_lt[1])      write "file"
 
 # if "my_url" not in st.session_state:
     # st.session_state.my_url=""
@@ -51,8 +51,8 @@ if(btn):
 
 # st.warning(write_lt[0])
 
-    st.write(write_lt[1])
-    st.write(write_lt)
+    # st.write(write_lt[1])    write "done" 
+    # st.write(write_lt)
 
 file_df=dy.get_csv_file(file_path)
 
