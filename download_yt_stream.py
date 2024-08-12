@@ -262,8 +262,9 @@ def delete_file(path):
                 if(os.path.exists(os.path.join(path,file)) or os.path.isfile(file)):
 
                     file_list.append(file)
-                    # os.remove(file)
                     print(f'{file} deleted')
+                    os.remove(os.path.join(path,file))
+                    
                 else:
                     print(f"{file} file not found")
 
