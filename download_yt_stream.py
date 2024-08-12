@@ -165,44 +165,45 @@ def download_from_csv(file_df,path):
     err=[]
     # yt_file_empty=False
     done=''
-    # while not yt_file.empty:
+    while not yt_file.empty:
+        print("1st sec")
+        yt_index=yt_file.head(1).index[0]
+
+        print(f'func1.0 : {yt_index} ')
+        url=yt_file['URL'][yt_index]
+        print("2nd sec ")
+        #    print(url)
+        try:
+            yt = YouTube(url, on_progress_callback = on_progress)
+            # print("on_progress")
+            # print(on_progress())
+        except Exception as e:
+            print(f'Video is unavailable, private video or region restricted. Cannot download. Skipping. Error :{e}')
+            err.append(f'{e}')
+        else:
+            #    print('go on')
+            pass
         
-    #     break
-        # print("1st sec")
-        # yt_index=yt_file.head(1).index[0]
+        print("...continuing")
+        # st.progress(50)
 
-        # print(f'func1.0 : {yt_index} ')
-        # url=yt_file['URL'][yt_index]
-        # print("2nd sec ")
-        # #    print(url)
-        # try:
-        #     yt = YouTube(url, on_progress_callback = on_progress)
-        # except Exception as e:
-        #     print(f'Video is unavailable, private video or region restricted. Cannot download. Skipping. Error :{e}')
-        #     err.append(f'{e}')
-        # else:
-        #     #    print('go on')
-        #     pass
-        
-        # print("...continuing")
+        try:    
+            print(yt.title)
 
-        # try:    
-        #     print(yt.title)
+            print(yt.author,'\n')
+            ys = yt.streams.get_highest_resolution()
+            ys.download(output_path=path)
 
-        #     print(yt.author,'\n')
-        #     ys = yt.streams.get_highest_resolution()
-        #     ys.download(output_path=path)
-
-        #     yt_file.drop([yt_index],inplace=True)
-        #     #    print("\nNew\n",yt_file)             #last check for the empty dataframe
-        #     st.toast(f'No. {yt_index} \"{yt.title}\" downloaded ')
-        #     done='downloaded!'
-        # except Exception as e:
-        #     print(f'Download() error: {e}')
-        #     err.append(f'e')
-        # else:
-        #     pass
-        # url=''
+            yt_file.drop([yt_index],inplace=True)
+            #    print("\nNew\n",yt_file)             #last check for the empty dataframe
+            st.toast(f'SNo. {yt_index} \"{yt.title}\" downloaded ')
+            done='downloaded!'
+        except Exception as e:
+            print(f'Download() error: {e}')
+            err.append(f'{e}')
+        else:
+            pass
+        url=''
     #---------------------------------------->
     # if(yt_file.empty):
     #     yt_file_empty=True
@@ -218,7 +219,7 @@ def download_from_csv(file_df,path):
     down_lt=[err,done]
     return down_lt
 
-def delete_file(path,name_file):
+def delete_file(path):
     # file_path.close()
 
     folder_path_2 = path
@@ -233,14 +234,23 @@ def delete_file(path,name_file):
         if os.path.isfile(os.path.join(folder_path_2, filename)):
             # Get the prefix (assuming the prefix is everything before the first '_')
             # print(f'filename: {os.path.basename(filename)}')
-            if filename.endswith('.csv'):
-                prefix = filename.split('You')[0]
-                print(f'prefix: {prefix} type: {type(prefix)}')
+            # if filename.endswith('.csv'):
+                # prefix = filename.split('New')[0]
+                # print(f'prefix: {prefix} type: {type(prefix)}')
             # Group files by prefix
             
-                prefix_dict[prefix].append(filename)
+                
+                
+                
+
+                prefix=None
+                if(filename.endswith('.csv')):
+                    prefix=filename.find('New')
+
+                    if(prefix==0):
+                        prefix_dict[prefix].append(filename)
+                        print(f'in dict: {prefix_dict[prefix]}')
                 print('sorting done')
-                print(f'in dict: {prefix_dict[prefix]}')
 
 
     # file_for_remove='students.csv'
@@ -251,10 +261,7 @@ def delete_file(path,name_file):
                 print(f"    {file}")
                 if(os.path.exists(os.path.join(path,file)) or os.path.isfile(file)):
 
-                    file_name=os.path.basename(file)
-                    print(f"file basename: {file_name}")
-                    file_list.append(file_name)
-
+                    file_list.append(file)
                     # os.remove(file)
                     print(f'{file} deleted')
                 else:
