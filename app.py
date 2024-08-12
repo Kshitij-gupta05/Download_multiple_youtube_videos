@@ -4,6 +4,7 @@ import os
 
 st.title('Youtube Video downloader')
 
+#folder and file paths
 folder_path='C:\\Users\\HP\\Desktop'
 folder='New1'
 file='Youtube_download.csv'
@@ -11,16 +12,12 @@ file='Youtube_download.csv'
 path=os.path.join(folder_path,folder)
 file_path=os.path.join(path,file)
 
-result_lt=dy.check_file_exist(path,file_path)
-# st.write(type(result_lt))
+result_lt=dy.check_file_exist(path,file_path)  #check whether file exist or if not then, create one
 
-if(len(result_lt[0])>1):
+if(len(result_lt[0])>1):                #display warning 
     st.warning(result_lt[0])
 
-# st.write(result_lt[1])      write "file"
-
-# if "my_url" not in st.session_state:
-    # st.session_state.my_url=""
+# st.write(result_lt[1])      write "file" if check_file_exist has no errors and created the file
 
 if "my_text" not in st.session_state:
     st.session_state.my_text=""
