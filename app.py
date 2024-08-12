@@ -75,10 +75,12 @@ if(btn2):
     container1.dataframe(file_df)
 
     
-    name_file=file.split('.')[0]
-    print(name_file)
-    delete_files=dy.delete_file(path,name_file)
-    container1.write(delete_files)
+
+    # print(name_file)
+    delete_files=dy.delete_file(path)
+    for file_del in delete_files:
+
+        container1.write(f'{file_del} Deleted')
 
 
 
