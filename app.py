@@ -36,7 +36,7 @@ btn=st.button("Click to store the URL")                 #button to start writitn
 if(btn):                                        #when 1st button is clicked
     write_lt=dy.write_data_in_csv(file_path,url)
     if(write_lt[1]=='done'):
-        st.toast("URL entered into the csv file")
+        st.toast("URL stored into the csv file")
 
     if(len(write_lt[0])):
         st.warning(write_lt[0])

@@ -9,7 +9,7 @@ from collections import defaultdict
 
 yt_fields=['URL']
 
-def check_file_exist(path,file_path):           #function to check if file exist. If not, then create a new
+def check_file_exist(path,file_path):           #function to check if file or folder exist. If not, then create the new ones
     err=" "
     if(os.path.exists(path)):
         print("exist")
