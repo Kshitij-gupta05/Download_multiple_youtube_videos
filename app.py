@@ -19,65 +19,52 @@ if(len(result_lt[0])>1):                #display warning
 
 # st.write(result_lt[1])      write "file" if check_file_exist has no errors and created the file
 
-if "my_text" not in st.session_state:
+if "my_text" not in st.session_state:           
     st.session_state.my_text=""
 
-def clear_input_box():
+def clear_input_box():          #function to clear the input box after submitting the URL
     st.session_state.my_text = st.session_state.widget
     st.session_state.widget = ""
 
 
-st.text_input("Write the URL",key="widget",on_change=clear_input_box)
+st.text_input("Write the URL",key="widget",on_change=clear_input_box)       #input box to enter the URL
 
 url= st.session_state.my_text
 
-btn=st.button("Click to store the URL")
+btn=st.button("Click to store the URL")                 #button to start writitng into the csv file and storing the URLs
 
-if(btn):
-    # url=st.session_state.my_url
+if(btn):                                        #when 1st button is clicked
     write_lt=dy.write_data_in_csv(file_path,url)
     if(write_lt[1]=='done'):
         st.toast("URL entered into the csv file")
 
     if(len(write_lt[0])):
         st.warning(write_lt[0])
-    # clear_input_box()
-    
-# st.warning(len(write_lt[0]))
 
+file_df=dy.get_csv_file(file_path)              #storing the data in the file in form of Dataframe
 
-# st.warning(write_lt[0])
-
-    # st.write(write_lt[1])    write "done" 
-    # st.write(write_lt)
-
-file_df=dy.get_csv_file(file_path)
-
-st.dataframe(file_df)
+st.dataframe(file_df)                           #display Dataframe
 
 container1=st.container(border=True)
 container1.subheader("Download")
-btn2=container1.button("Download videos")
-# container1.
+btn2=container1.button("Download videos")           #button to start downloading the videos into the given folder, or path mentioned in 'path' string
 
-if(btn2):
+if(btn2):                               #when 2nd button is clicked
 
-    down_lt=dy.download_from_csv(file_df,path)
+    down_lt=dy.download_from_csv(file_df,path)            #call function to start downloading the videos
 
-    if(len(down_lt[0])):
+    if(len(down_lt[0])):                        #if there is an error
         container1.warning(down_lt[0])
 
-    container1.write(down_lt[1])
+    container1.write(down_lt[1])                #display "downloaded" as video is successfully downloaded
 
-    container1.dataframe(file_df)
+    container1.dataframe(file_df)               #display the dataframe
 
-    
+    delete_files=dy.delete_file(path)               #call function to delete the csv file
 
-    # print(name_file)
-    delete_files=dy.delete_file(path)
-    for file_del in delete_files:
+    for file_del in delete_files:                   #print names of deleted files
 
-        container1.write(f'{file_del} Deleted')
+        container1.write(f'{file_del} Deleted')         
 
 
 
